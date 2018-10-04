@@ -48,6 +48,7 @@ public class Controller implements Initializable {
         TreeItem<String> Collider = new TreeItem<>("Collider");
         TreeItem<String> Sprite = new TreeItem<>("Sprite");
         TreeItem<String> Control = new TreeItem<>("Control");
+        TreeItem<String> hola = new TreeItem<>("Control");
 
 
         Player.getChildren().addAll(Collider,Sprite,Control);
