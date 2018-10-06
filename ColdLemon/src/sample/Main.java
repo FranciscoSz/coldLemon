@@ -5,10 +5,8 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.Background;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import sun.misc.Launcher;
+import sample.controllers.splash;
 
 public class Main extends Application {
 
@@ -27,7 +25,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("principal.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("vistas/principal.fxml"));
         primaryStage.setTitle("ColdLemon");
         primaryStage.setScene(new Scene(root, 1000, 600));
         primaryStage.show();

@@ -1,4 +1,4 @@
-package sample;
+package sample.controllers;
 
 import com.sun.prism.paint.Color;
 import javafx.application.Platform;
@@ -60,7 +60,7 @@ public class splash extends Preloader {
                 Parent root2;
                 try{
 
-                    root2 = FXMLLoader.load(getClass().getResource("splash.fxml"));
+                    root2 = FXMLLoader.load(getClass().getResource("../vistas/splash.fxml"));
                     escena = new Scene(root2,600,600);
 
 
