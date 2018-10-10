@@ -11,16 +11,8 @@ import java.util.regex.Pattern;
 public final class Configs {
     
     public static final String[] KEYWORDS = new String[] {
-            "abstract", "assert", "boolean", "break", "byte",
-            "case", "catch", "char", "class", "const",
-            "continue", "default", "do", "double", "else",
-            "enum", "extends", "final", "finally", "float",
-            "for", "goto", "if", "implements", "import",
-            "instanceof", "int", "interface", "long", "native",
-            "new", "package", "public", "protected", "public",
-            "return", "short", "static", "strictfp", "super",
-            "switch", "synchronized", "this", "throw", "throws",
-            "transient", "try", "void", "volatile", "while"
+          "Mover","MoverCon","Saltar","SaltarCon","Derecha","Izquierda","Arriba","Abajo",
+            "KDER","KIZQ","KBAJ","KARR","Entidad","Estado","fin"
     };
 
     public static final String KEYWORD_PATTERN = "\\b(" + String.join("|", KEYWORDS) + ")\\b";
@@ -42,26 +34,21 @@ public final class Configs {
     );
 
     public static final String sampleCode = String.join("\n", new String[] {
-            "package com.example;",
+            "Entidad.Player",
             "",
-            "import java.util.*;",
+            "Estado Inicio():",
+            "         fin",
             "",
-            "public class Foo extends Bar implements Baz {",
+            "Estado Jugando(tiempo):",
+            "        fin",
             "",
-            "    /*",
-            "     * multi-line comment",
-            "     */",
-            "    public static void main(String[] args) {",
-            "        // single-line comment",
-            "        for(String arg: args) {",
-            "            if(arg.length() != 0)",
-            "                System.out.println(arg);",
-            "            else",
-            "                System.err.println(\"Warning: empty string as argument\");",
-            "        }",
-            "    }",
             "",
-            "}"
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
     });
 
     ///para pintar las palabras
