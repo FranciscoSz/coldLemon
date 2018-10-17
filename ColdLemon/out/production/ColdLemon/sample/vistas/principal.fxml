@@ -53,7 +53,7 @@
             </MenuBar>
             <ToolBar cache="true" nodeOrientation="LEFT_TO_RIGHT" prefHeight="40.0" prefWidth="200.0" styleClass="toolbar">
               <items>
-                <Button minHeight="25.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="25.0" styleClass="btn-play" />
+                <Button minHeight="25.0" mnemonicParsing="false" onAction="#evtPlay" prefHeight="20.0" prefWidth="25.0" styleClass="btn-play" />
               </items>
                <effect>
                   <DropShadow blurType="ONE_PASS_BOX" height="9.32" radius="4.1075" spread="0.17" width="9.11" />
@@ -91,8 +91,11 @@
                <content>
                   <HBox prefHeight="145.0" prefWidth="700.0">
                      <children>
-                        <VBox prefHeight="167.0" prefWidth="27.0" styleClass="context-menu" />
-                        <TextArea prefHeight="165.0" prefWidth="670.0" HBox.hgrow="ALWAYS" />
+                        <VBox prefHeight="167.0" prefWidth="27.0" styleClass="context-menu">
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#limpiarConsola" text="clearConsola" />
+                           </children></VBox>
+                        <TextArea fx:id="txtConsola" editable="false" prefHeight="165.0" prefWidth="670.0" HBox.hgrow="ALWAYS" />
                      </children>
                      <padding>
                         <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />

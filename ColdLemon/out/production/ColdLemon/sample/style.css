@@ -103,14 +103,36 @@
   -fx-border-color: #009999;
 }
 
+
+/*estilos para el code area*/
+
+/*Palabras Clave*/
 .keyword {
-    -fx-fill: purple;
+    -fx-fill: #90ee90;
     -fx-font-weight: bold;
+}
+/*palabras normales y puntos*/
+.normal {
+    -fx-fill: white;
+}
+/* no se */
+.build_in_function{
+    -fx-fill: green;
+    -fx-font-weight: bold;
+}
+/*Palabras que forman parte de la funcion*/
+.function{
+  -fx-fill: #6699ff;
 }
 .semicolon {
+    -fx-fill: red;
     -fx-font-weight: bold;
 }
-.paren {
+.boolean{
+    -fx-fill: teal;
+    -fx-font-weight: bold;
+}
+.paren{
     -fx-fill: firebrick;
     -fx-font-weight: bold;
 }
@@ -122,8 +144,9 @@
     -fx-fill: teal;
     -fx-font-weight: bold;
 }
+
 .string {
-    -fx-fill: blue;
+    -fx-fill: yellow;
 }
 
 .comment {
@@ -131,5 +154,22 @@
 }
 
 .paragraph-box:has-caret {
-    -fx-background-color: #f2f9fc;
+    -fx-background-color: #f2f9fc33;
+}
+
+.styled-text-area {
+  -fx-background-color: #001a1a;
+}
+.caret { /*para  la linea de escribir*/
+    -fx-stroke: white;
+}
+.styled-text-area .selection{
+  -fx-fill: red;
+}
+.styled-text-area .lineno{ /*estilos para los numeritos del richText*/
+  -fx-background-color: #001a1a;
+  -fx-text-fill: #006666;
+}
+.styled-text-area .selection{
+  -fx-fill: red;
 }

@@ -43,10 +43,8 @@ public class EditorSprite implements Initializable {
                cv.setHeight(16);
 
                cv.setOnMousePressed(e-> {
-
                        cv.getGraphicsContext2D().setFill(piker.getValue());
                        cv.getGraphicsContext2D().fillRect(0, 0, cv.getWidth(), cv.getHeight());
-
                });
                gpane.add(cv,x,y,1,1);
            }
