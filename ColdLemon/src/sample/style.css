@@ -89,7 +89,9 @@
 }
 
 }
-.btn-play{
+
+
+.btn-play{ /*icono para el boton de play*/
 -fx-background-color: rgba(255, 0, 0, 0);
 -fx-background-image: url("../imagenes/play.png");
 -fx-background-size: 50% 50%;
@@ -102,7 +104,20 @@
   -fx-background-color:#006666;
   -fx-border-color: #009999;
 }
+/*icono para el boton de addEntidad*/
+.btn-entidad{
+-fx-background-color: rgba(255, 0, 0, 0);
+-fx-background-image: url("../imagenes/plus.png");
+-fx-background-size: 50% 50%;
+-fx-background-repeat: no-repeat;
+-fx-background-position: center;
+}
 
+
+.btn-entidad:hover{
+  -fx-background-color:#006666;
+  -fx-border-color: #009999;
+}
 
 /*estilos para el code area*/
 
@@ -163,13 +178,10 @@
 .caret { /*para  la linea de escribir*/
     -fx-stroke: white;
 }
-.styled-text-area .selection{
+.selection{
   -fx-fill: red;
 }
 .styled-text-area .lineno{ /*estilos para los numeritos del richText*/
   -fx-background-color: #001a1a;
   -fx-text-fill: #006666;
-}
-.styled-text-area .selection{
-  -fx-fill: red;
 }

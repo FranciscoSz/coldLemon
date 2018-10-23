@@ -47,8 +47,8 @@ public final class Configs {
             "Entidad.Player",
             "",
             "Estado Inicio:",
-            "\tMoverCon KDER Derecha 5",
-            "\tSaltarCon KARR 10",
+            "\t> MoverCon KDER Derecha 5",
+            "\t> SaltarCon KARR 10",
             "         fin",
             "",
             "Estado Jugando:",
@@ -93,12 +93,12 @@ public final class Configs {
 
 
     public static String[] EXPRECIONES = {
-            "^(Entidad)[\\.][a-zA-Z]+",
-            "^(Estado)[\\s][a-zA-Z]+(:)$",
-            "[\\t](>)[\\s](MoverCon)[\\s](KDER|KIZQ|KARR|KABA)[\\s](Derecha|Izquierda|Arriba|Abajo)[\\s]\\d+",
-            "(([\\s]+(fin)[\\s]+)|([\\s]+(fin)))",
-            "[\\t](>)[\\s](Mover)[\\s](Derecha|Izquierda|Arriba|Abajo)[\\s][\\d]+",
-            "[\\t](>)[\\s](SaltarCon)[\\s](KDER|KIZQ|KARR|KABA)[\\s]\\d+"
+            "([\\s]+|(?![\\s]))(Entidad)[\\.][a-zA-Z]+([\\s]+|(?![\\s]))", //la referencia del script
+            "^(Estado)[\\s][a-zA-Z]+(:)$", //nombre del estado en el que se esta trabajando
+            "[\\t](>)[\\s](MoverCon)[\\s](KDER|KIZQ|KARR|KABA)[\\s](Derecha|Izquierda|Arriba|Abajo)[\\s]\\d+([\\s]+|(?![\\s]))", //sentencia para mover con una tecla
+            "([\\s]+|(?![\\s]))(fin)([\\s]+|(?![\\s]))", //fnal del estado
+            "[\\t](>)[\\s](Mover)[\\s](Derecha|Izquierda|Arriba|Abajo)[\\s][\\d]+([\\s]+|(?![\\s]))", //para mover en una direccion
+            "[\\t](>)[\\s](SaltarCon)[\\s](KDER|KIZQ|KARR|KABA)[\\s]\\d+([\\s]+|(?![\\s]))" //para saltar con una tecla
     };
 
 

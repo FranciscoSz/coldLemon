@@ -10,26 +10,26 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.stage.*;
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
 import org.fxmisc.richtext.model.StyleSpans;
 import org.fxmisc.richtext.model.StyleSpansBuilder;
 import org.reactfx.Subscription;
+import sample.Main;
 import sample.constantes.Configs;
 
 
+import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -43,7 +43,9 @@ import static sample.constantes.Configs.*;
 public class Controller implements Initializable {
 
     @FXML
-    TreeView <String> treeview;
+    TreeView <String> treeview,treevinspector;
+
+    @FXML TabPane tapane;
 
     @FXML
     Pane panesote;
@@ -52,6 +54,7 @@ public class Controller implements Initializable {
     @FXML
     TextArea txtConsola;
 
+    TreeItem<String> Main;
 
 
     CodeArea codeArea = new CodeArea();
@@ -62,27 +65,36 @@ public class Controller implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
 
+        ///Para el treeview de las entidades
+        Main = new TreeItem<>("Nivel 1");
 
-
-        TreeItem<String> Main = new TreeItem<>("Nivel 1");
-
-
-
-        TreeItem<String> Player = new TreeItem<>("Entidades");
-        TreeItem<String> Enemigo = new TreeItem<>("Escenaios");
-        TreeItem<String> Collider = new TreeItem<>("Collider");
-        TreeItem<String> Sprite = new TreeItem<>("Sprite");
-        TreeItem<String> Control = new TreeItem<>("Control");
-
-
-
-        Player.getChildren().addAll(Collider,Sprite,Control);
-        Enemigo.getChildren().addAll(Collider,Sprite,Control);
-
-
-
-        Main.getChildren().addAll(Player,Enemigo);
+        TreeItem<String> Entidades = new TreeItem<>("Entidades");
+        TreeItem<String> Escenarios = new TreeItem<>("Escenarios");
+        //Entidades.getChildren().addAll(Collider,Sprite,Control);
+        //Escenarios.getChildren().addAll(Collider,Sprite,Control);
+        Main.getChildren().addAll(Entidades,Escenarios);
         treeview.setRoot(Main);
+
+
+        ///Para el TreeView Del inspector xdxdxdxdxdxd si o no raza?
+
+        TreeItem<String> mainIns = new TreeItem<>("Proyecto");
+        String dir = System.getProperty("user.dir").trim();
+        String[] direcctorio = dir.split("\\/");
+
+        for(int x = 1; x < direcctorio.length;x++){
+
+
+            TreeItem<String> item = new TreeItem<>(direcctorio[x]);
+
+            mainIns.getChildren().add(item);
+        }
+        treevinspector.setRoot(mainIns);
+
+
+
+
+
 
 
         ////para las palabras reservadas
@@ -108,8 +120,43 @@ public class Controller implements Initializable {
 
                 }
             }
-        });
+
+
+        });///final del evento
+
         anchor.getChildren().add(codeArea);
+        codeArea.replaceText(0,0,0,0," ");
+
+
+    }
+    ////crear un folder del proyecto
+    public void crearFolders(){
+        //Para agarrar el directorio donde lo queremos guardar
+        DirectoryChooser path = new DirectoryChooser();
+        path.setTitle("Guardar Proyecto");
+        path.setInitialDirectory(new File(System.getProperty("user.home")));
+        Stage stage = (Stage) treeview.getScene().getWindow();
+        File file = path.showDialog(stage);
+      if(file != null){
+
+          System.out.println(file.getAbsolutePath());
+          File folder = new File(file,"Proyecto");
+          folder.mkdir();
+          File folImagenes = new File(folder.getAbsolutePath(),"Imagenes");
+          folImagenes.mkdir();
+      }
+       /* File script = new File("script.clemon");
+        File folder = new File("Proyecto",file.getAbsolutePath());
+        try{
+            script.createNewFile();
+            folder.mkdir();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+
+        System.out.println(folder.getPath());*/
+
+
 
 
     }
@@ -123,10 +170,17 @@ public class Controller implements Initializable {
             File file = of.showOpenDialog(stage);
 
         }
-
+        public void evtNuevo(ActionEvent event){
+            crearFolders();
+        }
         public void evtPlay(ActionEvent evt){
 
             compilar();
+        }
+        public void evtAddEntidad(ActionEvent evt){
+
+
+        addEntidad();
 
 
         }
@@ -168,7 +222,7 @@ public class Controller implements Initializable {
         }
         public void editarSprite(ActionEvent event){
             try {
-                Parent editorSp = FXMLLoader.load(getClass().getResource("editorSprite.fxml"));
+                Parent editorSp = FXMLLoader.load(getClass().getResource("../vistas/editorSprite.fxml"));
                 Scene edSp = new Scene(editorSp,800,600);
                 Stage stage = (Stage) treeview.getScene().getWindow();
                 stage.setScene(edSp);
@@ -181,6 +235,65 @@ public class Controller implements Initializable {
                 e.printStackTrace();
             }
 
+
+
+        }
+
+
+
+
+        public void addEntidad(){
+            TreeItem<String> Collider = new TreeItem<>("Collider");
+            TreeItem<String> Sprite = new TreeItem<>("Sprite");
+            TreeItem<String> Control = new TreeItem<>("Control");
+
+
+
+            if(treeview.getSelectionModel().getSelectedItem().getValue().equals("Entidades")){
+                TreeItem<String> seleccion = treeview.getSelectionModel().getSelectedItem();
+                seleccion.getChildren().add(Collider);
+                seleccion.setExpanded(true);
+            }
+
+
+            Tab tabsito = new Tab();
+            AnchorPane anchorPane = new AnchorPane();
+            Pane panesito = new Pane();
+            CodeArea codeAreas = new CodeArea();
+
+            ///empieza el codigo del codeArea
+            codeAreas.setParagraphGraphicFactory(LineNumberFactory.get(codeAreas));
+            codeAreas.replaceText(0, 0, sampleCode);
+            Subscription cleanupWhenNoLongerNeedIt = codeAreas
+                    .multiPlainChanges()
+                    .successionEnds(Duration.ofMillis(500))
+                    .subscribe(ignore -> codeAreas.setStyleSpans(0, computeHighlighting(codeAreas.getText())));
+            codeAreas.setPrefSize(anchor.getPrefWidth() + 470,400);
+            codeAreas.setOnKeyPressed(new EventHandler<KeyEvent>() {
+                @Override
+                public void handle(KeyEvent event) {
+                    if(event.getCode() == KeyCode.ENTER){
+                        int linea = codeAreas.getCurrentParagraph();
+                        String texto = codeAreas.getText(linea - 1).trim();
+                        if(texto.endsWith(":")|texto.startsWith(">")){
+                            codeAreas.replaceText(linea,0,linea,0,"\t" + ">" + " ");
+                        } else {
+                            System.out.println("no se tabula morro");
+                        }
+
+
+                    }
+                }
+
+
+            });///final del evento
+
+            panesito.getChildren().add(codeAreas);
+            anchorPane.getChildren().add(panesito);
+            tabsito.setContent(anchorPane);
+            tabsito.setText("Entidad");
+            tapane.getTabs().add(tabsito);
+            codeAreas.replaceText(0,0,0,0," ");
 
 
         }

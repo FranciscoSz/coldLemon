@@ -28,6 +28,7 @@
                 <Menu mnemonicParsing="false" text="Archivo">
                   <items>
                     <MenuItem mnemonicParsing="false" onAction="#evtAbrir" text="Abrir" />
+                        <MenuItem mnemonicParsing="false" onAction="#evtNuevo" text="Nuevo" />
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Editar">
@@ -65,12 +66,19 @@
    <left>
       <VBox styleClass="barratareas" BorderPane.alignment="CENTER">
          <children>
-            <ToolBar minHeight="25.0" prefWidth="200.0">
+            <ToolBar minHeight="25.0" prefHeight="39.0" prefWidth="200.0">
                <items>
                   <Label text="Entidades" />
+                  <Button fx:id="btnAddEntidad" alignment="TOP_RIGHT" minHeight="33.0" mnemonicParsing="false" onAction="#evtAddEntidad" prefHeight="33.0" prefWidth="31.0" styleClass="btn-entidad" />
                </items>
             </ToolBar>
-            <TreeView fx:id="treeview" prefHeight="239.0" prefWidth="200.0" />
+            <TreeView fx:id="treeview" prefHeight="191.0" prefWidth="200.0" />
+            <ToolBar minHeight="25.0" prefHeight="39.0" prefWidth="200.0">
+               <items>
+                  <Label text="Inspector" />
+               </items>
+            </ToolBar>
+            <TreeView fx:id="treevinspector" prefHeight="191.0" prefWidth="200.0" />
          </children>
       </VBox>
    </left>
@@ -107,7 +115,7 @@
       </TabPane>
    </bottom>
    <center>
-      <TabPane BorderPane.alignment="CENTER">
+      <TabPane fx:id="tapane" BorderPane.alignment="CENTER">
          <tabs>
             <Tab closable="false" text="Editor">
                <content>
