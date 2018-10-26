@@ -46,7 +46,7 @@
 }
 
 .tree-cell{
-  -fx-background-color: #4f6d7a;
+  -fx-background-color: #004d4d;
   -fx-color: white;
 }
 .tree-cell:sub-tree-item {

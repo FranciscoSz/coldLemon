@@ -27,6 +27,7 @@ import org.fxmisc.richtext.model.StyleSpansBuilder;
 import org.reactfx.Subscription;
 import sample.Main;
 import sample.constantes.Configs;
+import sun.reflect.generics.tree.Tree;
 
 
 import javax.swing.*;
@@ -43,14 +44,20 @@ import static sample.constantes.Configs.*;
 public class Controller implements Initializable {
 
     @FXML
-    TreeView <String> treeview,treevinspector;
-
-    @FXML TabPane tapane;
+     TreeView <String> treeview,treevinspector;
+    public static TreeView<String> copia;
+    public static TreeView<String> copiaInspector;
+    @FXML
+     TabPane tapane;
+    public static TabPane copiaTab;
 
     @FXML
     Pane panesote;
     @FXML
+
     AnchorPane anchor;
+    public static AnchorPane copiaAnchor;
+
     @FXML
     TextArea txtConsola;
 
@@ -58,11 +65,17 @@ public class Controller implements Initializable {
 
 
     CodeArea codeArea = new CodeArea();
-
+    public static String PATHSCRIPTS,PATHIMAGENES,PATHPROYECTO,PATHAUDIOS = "";
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        copia = treeview;
+        copiaAnchor = anchor;
+        copiaTab = tapane;
+        copiaInspector = treevinspector;
+
 
 
         ///Para el treeview de las entidades
@@ -76,20 +89,6 @@ public class Controller implements Initializable {
         treeview.setRoot(Main);
 
 
-        ///Para el TreeView Del inspector xdxdxdxdxdxd si o no raza?
-
-        TreeItem<String> mainIns = new TreeItem<>("Proyecto");
-        String dir = System.getProperty("user.dir").trim();
-        String[] direcctorio = dir.split("\\/");
-
-        for(int x = 1; x < direcctorio.length;x++){
-
-
-            TreeItem<String> item = new TreeItem<>(direcctorio[x]);
-
-            mainIns.getChildren().add(item);
-        }
-        treevinspector.setRoot(mainIns);
 
 
 
@@ -129,6 +128,43 @@ public class Controller implements Initializable {
 
 
     }
+
+    public static void actualizarInspector(){
+
+        File pathPro = new File(PATHPROYECTO);
+        String[] archivos = pathPro.list();
+
+        Node rootIcon =  new ImageView(new Image(Controller.class.getResourceAsStream("../../imagenes/folder.png")));
+        TreeItem<String> mainIns = new TreeItem<>("Proyecto", rootIcon);
+
+
+        for(int x = 0; x < archivos.length;x++){
+
+            File filas = new File(pathPro.getAbsolutePath() + "/" + archivos[x]);
+            if(filas.isDirectory()){
+                Node subicono =  new ImageView(new Image(Controller.class.getResourceAsStream("../../imagenes/folder.png")));
+                TreeItem<String> f = new TreeItem<>(archivos[x],subicono);
+
+                String[] filitas = filas.list();
+                for(int y = 0; y < filitas.length; y++){
+
+                    TreeItem<String> Subarchivos = new TreeItem<>(filitas[y]);
+                    f.getChildren().add(Subarchivos);
+                    System.out.println(filitas[y]);
+
+
+                }
+                mainIns.getChildren().add(f);
+            }
+
+
+        }
+        copiaInspector.setRoot(mainIns);
+        mainIns.setExpanded(true);
+        mainIns.getChildren().get(0).setExpanded(true);
+
+    }
+
     ////crear un folder del proyecto
     public void crearFolders(){
         //Para agarrar el directorio donde lo queremos guardar
@@ -137,14 +173,76 @@ public class Controller implements Initializable {
         path.setInitialDirectory(new File(System.getProperty("user.home")));
         Stage stage = (Stage) treeview.getScene().getWindow();
         File file = path.showDialog(stage);
-      if(file != null){
 
-          System.out.println(file.getAbsolutePath());
+      if(file != null){
+            ////crear folder del proyecto
           File folder = new File(file,"Proyecto");
           folder.mkdir();
+          PATHPROYECTO = folder.getAbsolutePath();
+          System.out.println(PATHPROYECTO);
+            ////crear folder de imagenes
           File folImagenes = new File(folder.getAbsolutePath(),"Imagenes");
           folImagenes.mkdir();
+          PATHIMAGENES = folImagenes.getAbsolutePath();
+            ////crear folder de scripts
+          File folScripts = new File(folder.getAbsolutePath(), "Scripts");
+          PATHSCRIPTS = folScripts.getAbsolutePath();
+          folScripts.mkdir();
+            ///cear folder de Audios
+          File folAudio = new File(folder.getAbsolutePath(),"Audios");
+          folAudio.mkdir();
+          PATHAUDIOS = folAudio.getAbsolutePath();
+
+
+
+          String[] archivos = folder.list();
+          Node rootIcon =  new ImageView(new Image(getClass().getResourceAsStream("../../imagenes/folder.png")));
+          TreeItem<String> mainIns = new TreeItem<>("Proyecto",rootIcon);
+
+
+
+
+          for(int x = 0; x < archivos.length;x++){
+
+              File filas = new File(folder.getAbsolutePath() + "/" + archivos[x]);
+              if(filas.isDirectory()){
+
+                  Node subicono =  new ImageView(new Image(getClass().getResourceAsStream("../../imagenes/folder.png")));
+                  TreeItem<String> f = new TreeItem<>(archivos[x],subicono);
+
+                  String[] filitas = filas.list();
+
+
+                  for(int y = 0; y < filitas.length; y++){
+                      String[] extencion = filitas[y].split("\\.");
+                      if(extencion[1].equals("clemon")){
+                          Node iconofila =  new ImageView(new Image(getClass().getResourceAsStream("../../imagenes/scripticon.png")));
+                          TreeItem<String> Subarchivos = new TreeItem<>(filitas[y],iconofila);
+                          f.getChildren().add(Subarchivos);
+                      }else{
+                          TreeItem<String> Subarchivos = new TreeItem<>(filitas[y]);
+                          f.getChildren().add(Subarchivos);
+                          System.out.println(filitas[y]);
+                      }
+
+                  }
+                  mainIns.getChildren().add(f);
+              }
+
+
+          }
+          treevinspector.setRoot(mainIns);
+
       }
+
+        ///Para el TreeView Del inspector xdxdxdxdxdxd si o no raza?
+
+
+
+
+
+
+
        /* File script = new File("script.clemon");
         File folder = new File("Proyecto",file.getAbsolutePath());
         try{
@@ -177,13 +275,25 @@ public class Controller implements Initializable {
 
             compilar();
         }
+
         public void evtAddEntidad(ActionEvent evt){
-
-
-        addEntidad();
-
-
+            if(treeview.getSelectionModel().getSelectedItem().getValue().equals("Entidades")){
+                Stage selecEntidad = new Stage();
+                selecEntidad.initModality(Modality.WINDOW_MODAL);
+                try{
+                    Parent editorSp = FXMLLoader.load(getClass().getResource("../vistas/entidades.fxml"));
+                    Scene edSp = new Scene(editorSp,600,400);
+                    selecEntidad.setScene(edSp);
+                }
+                catch(IOException e){e.printStackTrace();}
+                selecEntidad.initStyle(StageStyle.UNDECORATED);
+                selecEntidad.show();
+            }
         }
+
+
+
+
         public void compilar(){
             txtConsola.setText("");
             Long tInicial = System.currentTimeMillis();
@@ -242,21 +352,18 @@ public class Controller implements Initializable {
 
 
 
-        public void addEntidad(){
-            TreeItem<String> Collider = new TreeItem<>("Collider");
-            TreeItem<String> Sprite = new TreeItem<>("Sprite");
-            TreeItem<String> Control = new TreeItem<>("Control");
+        public static void addEntidad(TreeItem<String> item){
 
 
+            TreeItem<String> seleccion = copia.getSelectionModel().getSelectedItem();
+            seleccion.getChildren().add(item);
+            seleccion.setExpanded(true);
 
-            if(treeview.getSelectionModel().getSelectedItem().getValue().equals("Entidades")){
-                TreeItem<String> seleccion = treeview.getSelectionModel().getSelectedItem();
-                seleccion.getChildren().add(Collider);
-                seleccion.setExpanded(true);
-            }
+
 
 
             Tab tabsito = new Tab();
+
             AnchorPane anchorPane = new AnchorPane();
             Pane panesito = new Pane();
             CodeArea codeAreas = new CodeArea();
@@ -268,7 +375,7 @@ public class Controller implements Initializable {
                     .multiPlainChanges()
                     .successionEnds(Duration.ofMillis(500))
                     .subscribe(ignore -> codeAreas.setStyleSpans(0, computeHighlighting(codeAreas.getText())));
-            codeAreas.setPrefSize(anchor.getPrefWidth() + 470,400);
+            codeAreas.setPrefSize(copiaAnchor.getPrefWidth() + 470,400);
             codeAreas.setOnKeyPressed(new EventHandler<KeyEvent>() {
                 @Override
                 public void handle(KeyEvent event) {
@@ -291,10 +398,12 @@ public class Controller implements Initializable {
             panesito.getChildren().add(codeAreas);
             anchorPane.getChildren().add(panesito);
             tabsito.setContent(anchorPane);
-            tabsito.setText("Entidad");
-            tapane.getTabs().add(tabsito);
+            tabsito.setText(item.getValue());
+            copiaTab.getTabs().add(tabsito);
             codeAreas.replaceText(0,0,0,0," ");
-
+            File script = new File(PATHSCRIPTS,"Script.clemon");
+            try{script.createNewFile();}catch(IOException e){e.printStackTrace();}
+            actualizarInspector();
 
         }
 

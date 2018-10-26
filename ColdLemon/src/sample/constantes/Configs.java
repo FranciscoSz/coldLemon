@@ -29,7 +29,7 @@ public final class Configs {
     public static final String SEMICOLON_PATTERN = "\\;";
     public static final String STRING_PATTERN = "\"([^\"\\\\]|\\\\.)*\"";
     public static final String COMMENT_PATTERN = "//[^\n]*" + "|" + "/\\*(.|\\R)*?\\*/";
-    public static final String NORMAL_PATTERN = "(?!Estado|fin|Entidad)(\\w+|\\.|\\:)(?!Estado|fin|Entidad)";
+    public static final String NORMAL_PATTERN = "(?!Estado|fin|Entidad|>)(\\w+|\\.|\\:)(?!Estado|fin|Entidad|>)";
 
     public static final Pattern PATTERN = Pattern.compile(
             "(?<KEYWORD>" + KEYWORD_PATTERN + ")"
